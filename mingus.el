@@ -394,10 +394,10 @@ Mingus sort functions should take this variable into account."
   "Customization group to control the modeline for `mingus'"
   :group 'mingus)
 
-(defcustom mingus-use-ido-mode-p nil
-  "Whether to use ido-mode fuzzy completion when searching artists, tracks, etc.
-Do not use ido-mode completion when nil.
-Do use ido-mode completion when t.
+(defcustom mingus-use-ivy-mode-p nil
+  "Whether to use ivy-mode fuzzy completion when searching artists, tracks, etc.
+Do not use ivy-mode completion when nil.
+Do use ivy-mode completion when t.
 Default: nil."
   :group 'mingus
   :type '(boolean))
@@ -1630,10 +1630,10 @@ This is an exact copy of line-number-at-pos for use in emacs21."
                                         ; change space character to simply
                                         ; insert a space
     (unwind-protect
-        (if (and mingus-use-ido-mode-p
-                 (fboundp 'ido-completing-read)
+        (if (and mingus-use-ivy-mode-p
+                 (fboundp 'ivy-completing-read)
                  (listp table))
-            (ido-completing-read prompt
+            (ivy-completing-read prompt
                                  ; this lists every song in the song db
                                  table
                                  predicate
@@ -3591,8 +3591,8 @@ possible).  Optional argument TYPE predefines the type of query."
          (pos (point))
          (query (mingus-completing-read-allow-spaces
                  (format "%s query: " (capitalize type))
-                 (if (and mingus-use-ido-mode-p
-                          (fboundp 'ido-completing-read))
+                 (if (and mingus-use-ivy-mode-p
+                          (fboundp 'ivy-completing-read))
                      (mingus-remove-dupes
                       (delq nil
                             (mapcar
